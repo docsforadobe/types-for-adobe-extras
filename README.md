@@ -1,8 +1,8 @@
-<div align="center">
-
 # Officially Unsupported Types for the Adobe API
 
-</div>
+## Contents
+- Premiere Pro
+  - QE DOM
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ Install [Node.js](https://nodejs.org/en/download/) and [TypeScript](https://www.
 ## Example Usage in Premiere Pro
 
 ```
-/// <reference types='node_modules/types-for-adobe-extras/Premiere/12.0/qeDom.d.ts' />
+/// <reference path='node_modules/types-for-adobe-extras/Premiere/12.0/qeDom.d.ts' />
 ```
 
 ## More typings
