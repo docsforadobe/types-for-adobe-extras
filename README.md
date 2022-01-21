@@ -1,6 +1,6 @@
 <div align="center">
 
-# Officially Unsupported Docs for the Adobe API
+# Officially Unsupported Types for the Adobe API
 
 </div>
 
