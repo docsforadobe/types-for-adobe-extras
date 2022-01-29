@@ -29,7 +29,7 @@ interface QEApplication {
   platform: string
   language: string
   /** The QE representation of the Project. */
-  project: QE.Project
+  project: QE.QEProject
   codeProfiler: QE.CodeProfiler
   audioChannelMapping: number
   source: QE.Source
@@ -92,33 +92,22 @@ declare namespace QE {
     getLoggedInUserDisplayId(): any
     renameProduction(): any
   }
-  interface Project {
-    importFailures: any
-    currentRendererName: string
-    isAudioConforming: boolean
-    isIndexing: boolean
-    isAudioPeakGenerating: boolean
-    numConformedFiles: number
-    numIndexedFiles: number
-    numAudioPeakGeneratedFiles: number
-    name: string
-    path: string
-    numSequences: number
-    numItems: number
-    numBins: number
-    numSequenceItems: number
-    numActiveProgressItems: number
-    newSmartBin(): any
-    undo(): any
-    redo(): any
-    undoStack(): any
-    undoStackIndex(): any
-    importProject(): any
-    importPSD(): any
-    newBarsAndTone(): any
-    newCaption(): any
-    newUniversalCountingLeader(): any
-    newTransparentVideo(): any
+  interface QEProject {
+    readonly currentRendererName: string
+    readonly importFailures: any[]
+    readonly isAudioConforming: boolean
+    readonly isAudioPeakGenerating: boolean
+    readonly isIndexing: boolean
+    readonly name: string
+    readonly numActiveProgressItems: number
+    readonly numAudioPeakGeneratedFiles: number
+    readonly numBins: number
+    readonly numConformedFiles: number
+    readonly numIndexedFiles: number
+    readonly numItems: number
+    readonly numSequenceItems: number
+    readonly numSequences: number
+    readonly path: string
     newBlackVideo(
       width: number,
       height: number,
@@ -126,27 +115,8 @@ declare namespace QE {
       aspectNumerator: number,
       aspectDenominator: number,
     ): boolean
-    newColorMatte(): any
-    import(): any
-    getRendererNames(): any
-    setRenderer(): any
     /** Get the QE representation of the currently active Sequence. */
     getActiveSequence(): Sequence
-    getRemainingMetadataCacheIndexCount(): any
-    resetNumFilesCounter(): any
-    init(): any
-    save(): any
-    saveAs(): any
-    close(): any
-    importFiles(): any
-    importAEComps(): any
-    importAllAEComps(): any
-    getSequenceAt(): any
-    getItemAt(): any
-    getBinAt(): Bin
-    getSequenceItemAt(): SequenceItem
-    getVideoEffectByName(name: string): VideoEffect
-    getAudioEffectByName(): any
     /**
      * See: https://github.com/Adobe-CEP/Samples/blob/00366bf8a86e44bd83704a04a8f4f0cdc75fd38f/PProPanel/jsx/PPRO/Premiere.jsx#L425
      *
@@ -154,18 +124,63 @@ declare namespace QE {
      * @param pathToPreset The path the the sequence preset to use.
      */
     newSequence(name: string, pathToPreset: string): boolean
-    sizeOnDisk(): any
-    getVideoTransitionByName(): any
-    getAudioTransitionByName(): any
-    getVideoEffectList(): string[]
-    getAudioEffectList(): string[]
-    getVideoTransitionList(): string[]
-    getAudioTransitionList(): string[]
     /**
      * Delete cached preview files for the specified media type.
      */
-    deletePreviewFiles(type: MediaType): any
-    newBin(): Bin
+    deletePreviewFiles(type: MediaType): boolean
+
+    findItemByID(pp0: string): object
+    flushCache(): boolean
+    getAudioEffectByName(pp0: string, pchannelType: number, pp2: boolean): object
+    getAudioEffectList(peffectType: number, pp1: boolean): string[]
+    getAudioTransitionByName(pp0: string, pp1: boolean): object
+    getAudioTransitionList(pp0: boolean): string[]
+    getBinAt(pp0: number): QEProjectItemContainer
+    getItemAt(pp0: number): object
+    getRemainingMetadataCacheIndexCount(): number
+    getRendererNames(): string[]
+    getSequenceAt(pp0: number): Sequence
+    getSequenceItemAt(pp0: number): SequenceItem
+    getVideoEffectByName(name: string, pp1: boolean): VideoEffect
+    getVideoEffectList(peffectType: number, pp1: boolean): string[]
+    getVideoTransitionByName(pp0: string, pp1: boolean): object
+    getVideoTransitionList(pp0: number, pp1: boolean): string[]
+    (pp0: any[], pisNumberedStills: boolean): boolean
+    importAEComps(pp0: string, pp1: any[]): boolean
+    importAllAEComps(pp0: string): boolean
+    importFiles(pp0: any[], pp1: boolean, pp2: boolean): boolean
+    (pp0: number, pp1: number, pp2: number, pp3: number, pp4: number, pp5: number): boolean
+    newBin(pp0: string): QEProjectItemContainer
+    newCaption(
+      pstandard: string,
+      pstream: string,
+      ptimebase1: string,
+      pgrid: string,
+      ptimebase2: string,
+      pparnum: number,
+      pparden: number,
+      ptestData: boolean,
+    ): boolean
+    (pp0: number, pp1: number, pp2: number, pp3: number, pp4: number): boolean
+    newSmartBin(pp0: string, pp1: string): boolean
+    newTransparentVideo(pp0: number, pp1: number, pp2: number, pp3: number, pp4: number): boolean
+    newUniversalCountingLeader(
+      pp0: number,
+      pp1: number,
+      pp2: number,
+      pp3: number,
+      pp4: number,
+      pp5: number,
+    ): boolean
+    redo(): boolean
+    resetNumFilesCounter(): boolean
+    save(): boolean
+    (pp0: string): boolean
+    setRenderer(pp0: string): boolean
+    sizeOnDisk(): number
+    undo(): boolean
+    undoStackIndex(): number
+    // undoStack(): any // no longer available?
   }
   interface CodeProfiler {
     start(): any
@@ -173,29 +188,111 @@ declare namespace QE {
     reset(): any
     get(): any
   }
-  interface Bin {
-    name: string
-    numItems: number
-    numSequences: number
-    numSequenceItems: number
-    numBins: number
-    getItemAt(): BinItem
-    getBinAt(): any
-    getSequenceAt(): any
-    newBin(): any
-    getSequenceItemAt(): any
+  interface QEProjectItemContainer {
+    readonly name: string
+    readonly numBins: number
+    readonly numItems: number
+    readonly numSequenceItems: number
+    readonly numSequences: number
+    flushCache(): boolean
+    getBinAt(pp0: number): QEProjectItemContainer
+    getItemAt(pp0: number): QEProjectItem
+    getSequenceAt(pp0: number): object
+    getSequenceItemAt(pp0: number): object
+    newBin(pp0: string): boolean
   }
-  interface BinItem {
-    name: string
-    clip: Clip
+  interface QEProjectItem {
+    readonly clip: QEMasterClip
+    readonly filePath: string
+    readonly mediaSyncStatus: string
+    readonly name: string
+    automateToSequence(pp0: object, pp1: number, pp2: number, pp3: number, pp4: number): boolean
+    containsSpeechTrack(): boolean
+    createProxy(pp0: string, pp1: string): boolean
+    getMetadataSize(): number
+    isAudioConforming(): boolean
+    isAudioPeakGenerating(): boolean
+    isIndexing(): boolean
+    isOffline(): boolean
+    isPending(): boolean
+    linkMedia(pp0: string, pp1: boolean): boolean
+    openInSource(): boolean
+    rename(passetName: string): boolean
+    setOffline(): boolean
   }
   interface VideoEffect {
     name: string
   }
-  interface TrackItem {
-    name: string
-    duration: string
-    addVideoEffect(effect: VideoEffect): boolean
+  interface QETrackItem {
+    readonly alignment: number
+    readonly antiAliasQuality: number
+    readonly borderColor: number
+    readonly borderWidth: number
+    readonly duration: number
+    readonly end: number
+    readonly frameBlend: number
+    readonly mediaType: number
+    readonly multicamEnabled: number
+    readonly name: number
+    readonly numComponents: number
+    readonly reverse: number
+    readonly reversed: number
+    readonly scaleToFrameSize: number
+    readonly speed: number
+    readonly start: number
+    readonly staticClipGain: number
+    readonly switchSources: number
+    readonly timeInterpolationType: number
+    readonly type: number
+    // readonly startPercent: number // Don't Use, will crash Premiere
+    // readonly endPercent: number // Don't Use, will crash Premiere
+
+    addAudioEffect(p0: object): boolean
+    addTransition(
+      p0: object,
+      p1: boolean,
+      p2: string,
+      p3: string,
+      p4: number,
+      p5: boolean,
+      p6: boolean,
+    ): boolean
+    addVideoEffect(p0: object): boolean
+    canDoMulticam(): boolean
+    getClipPanComponent(): object
+    getComponentAt(p0: number): object
+    getProjectItem(): object
+    move(
+      p0: string,
+      p1: boolean,
+      p2: boolean,
+      p3: boolean,
+      p4: boolean,
+      p5: boolean,
+      p6: boolean,
+    ): boolean
+    moveToTrack(p0: number, p1: number, p2: string, p3: boolean): boolean
+    remove(p0: boolean, p1: boolean): boolean
+    removeEffects(p0: boolean, p1: boolean, p2: boolean, p3: boolean, p4: boolean): boolean
+    rippleDelete(): boolean
+    roll(p0: string, p1: boolean, p2: boolean): boolean
+    setAntiAliasQuality(p0: number): boolean
+    setBorderColor(p0: number, p1: number, p2: number): boolean
+    setBorderWidth(p0: number): boolean
+    setEndPercent(p0: number): boolean
+    setEndPosition(p0: number, p1: number): boolean
+    setFrameBlend(p0: boolean): boolean
+    setMulticam(p0: boolean): boolean
+    setName(p0: string): boolean
+    setReverse(p0: boolean): boolean
+    setScaleToFrameSize(p0: boolean): boolean
+    setSpeed(p0: number, p1: string, p2: boolean, p3: boolean, p4: boolean): boolean
+    setStartPercent(p0: number): boolean
+    setStartPosition(p0: number, p1: number): boolean
+    setSwitchSources(p0: boolean): boolean
+    setTimeInterpolationType(p0: number): boolean
+    slide(p0: string, p1: boolean): boolean
+    slip(p0: string, p1: boolean): boolean
   }
   interface SequenceItem {
     name: string
@@ -206,11 +303,11 @@ declare namespace QE {
     isAudioPeakGenerating(): boolean
   }
   interface Source {
-    player: Player
-    clip: Clip
+    player: QEPlayer
+    clip: QEMasterClip
     openFilePath(): any
   }
-  interface Player {
+  interface QEPlayer {
     loopPlayback: false
     droppedFrames: string
     totalFrames: string
@@ -235,37 +332,37 @@ declare namespace QE {
     captureAudioDeviceLoad(): any
     getPosition(): any
   }
-  interface Clip {
-    name: string
-    filePath: string
-    duration: string
-    videoFieldType: number
-    videoHasAlpha: boolean
-    videoPixelAspectRatio: string
-    videoFrameWidth: number
-    videoFrameHeight: number
-    videoFrameRate: number
-    audioFrameRate: number
-    audioSampleSize: number
-    audioChannelType: number
-    audioNumChannels: number
-    setInPoint(): any
-    setOutPoint(): any
-    clearInPoint(): any
-    clearOutPoint(): any
-    setDuration(): any
-    numOfChildClipsInUse(): any
-    clearChildClips(): any
-    numOfChildClips(): any
-    hasChildClipsInUse(): any
-    containsCaptions(): any
-    containsCaptioningStream(): any
-    numCaptioningStreams(): any
-    getCaptioningStreamAt(): any
-    setVideoInPoint(): any
-    setVideoOutPoint(): any
-    setAudioInPoint(): any
-    setAudioOutPoint(): any
+  interface QEMasterClip {
+    readonly audioChannelType: number
+    readonly audioFrameRate: number
+    readonly audioNumChannels: number
+    readonly audioSampleSize: number
+    readonly duration: string
+    readonly filePath: string
+    readonly name: string
+    readonly videoFieldType: number
+    readonly videoFrameHeight: number
+    readonly videoFrameRate: number
+    readonly videoFrameWidth: number
+    readonly videoHasAlpha: boolean
+    readonly videoPixelAspectRatio: string
+    clearChildClips(): boolean
+    clearInPoint(): boolean
+    clearOutPoint(): boolean
+    containsCaptioningStream(pp0: string, pp1: string): boolean
+    containsCaptions(): boolean
+    getCaptioningStreamAt(pp0: number): object
+    hasChildClipsInUse(): boolean
+    numCaptioningStreams(): number
+    numOfChildClips(): number
+    numOfChildClipsInUse(): number
+    setAudioInPoint(pp0: string): boolean
+    setAudioOutPoint(pp0: string): boolean
+    setDuration(pp0: string): boolean
+    setInPoint(pp0: string): boolean
+    setOutPoint(pp0: string): boolean
+    setVideoInPoint(pp0: string): boolean
+    setVideoOutPoint(pp0: string): boolean
   }
   interface Sequence {
     /** Name of the sequence. */
@@ -297,7 +394,7 @@ declare namespace QE {
     par: number
     fieldType: number
     guid: string
-    player: Player
+    player: QEPlayer
     multicam: Multicam
     getVideoTrackAt(idx: number): Track
     getAudioTrackAt(idx: number): Track
@@ -401,7 +498,7 @@ declare namespace QE {
     /**
      * index of clip along track, including gaps
      */
-    getItemAt(index: number): TrackItem
+    getItemAt(index: number): QETrackItem
     getTransitionAt(): any
     setName(): any
     insert(): any
