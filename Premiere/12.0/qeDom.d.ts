@@ -145,7 +145,7 @@ declare namespace QE {
     getItemAt(): any
     getBinAt(): Bin
     getSequenceItemAt(): SequenceItem
-    getVideoEffectByName(): any
+    getVideoEffectByName(name: string): VideoEffect
     getAudioEffectByName(): any
     /**
      * See: https://github.com/Adobe-CEP/Samples/blob/00366bf8a86e44bd83704a04a8f4f0cdc75fd38f/PProPanel/jsx/PPRO/Premiere.jsx#L425
@@ -188,6 +188,14 @@ declare namespace QE {
   interface BinItem {
     name: string
     clip: Clip
+  }
+  interface VideoEffect {
+    name: string
+  }
+  interface TrackItem {
+    name: string
+    duration: string
+    addVideoEffect(effect: VideoEffect): boolean
   }
   interface SequenceItem {
     name: string
@@ -390,7 +398,10 @@ declare namespace QE {
     numItems: number
     numTransitions: number
     numComponents: number
-    getItemAt(): any
+    /**
+     * index of clip along track, including gaps
+     */
+    getItemAt(index: number): TrackItem
     getTransitionAt(): any
     setName(): any
     insert(): any
