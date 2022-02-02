@@ -107,6 +107,17 @@ interface QEProject {
   readonly numSequenceItems: number
   readonly numSequences: number
   readonly path: string
+  /**
+   * Create new Black Video
+   *
+   * @param width width in pixels
+   * @param height height in pixels
+   * @param framerate framerate
+   * @param aspectNumerator pixel aspect numerator
+   * @param aspectDenominator pixel aspect denominator
+   *
+   * @example qe.project.newBlackVideo(1920, 1080, 24, 1, 1)
+   */
   newBlackVideo(
     width: number,
     height: number,
@@ -114,17 +125,24 @@ interface QEProject {
     aspectNumerator: number,
     aspectDenominator: number,
   ): boolean
-  /** Get the QE representation of the currently active Sequence. */
+  /** Get the QE representation of the currently active Sequence.
+   *
+   * @example qe.project.getActiveSequence();
+   */
   getActiveSequence(): Sequence
   /**
-   * See: https://github.com/Adobe-CEP/Samples/blob/00366bf8a86e44bd83704a04a8f4f0cdc75fd38f/PProPanel/jsx/PPRO/Premiere.jsx#L425
    *
    * @param name The name of the new Sequence.
    * @param pathToPreset The path the the sequence preset to use.
+   *
+   * @example qe.project.newSequence('Rough Cut', 'path/to/preset.sqpreset');
+   *
+   * See: https://github.com/Adobe-CEP/Samples/blob/00366bf8a86e44bd83704a04a8f4f0cdc75fd38f/PProPanel/jsx/PPRO/Premiere.jsx#L425
    */
   newSequence(name: string, pathToPreset: string): boolean
   /**
    * Delete cached preview files for the specified media type.
+   * @example qe.project.deletePreviewFiles("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF"); // any
    */
   deletePreviewFiles(type: MediaType): boolean
 
@@ -264,7 +282,13 @@ interface QETrackItem {
     p5: boolean,
     p6: boolean,
   ): boolean
-  addVideoEffect(p0: object): boolean
+  /**
+   * Add a video effect to a QETrackItem
+   *
+   * @param effect The name of the new Sequence.
+   * @example item.addVideoEffect(qe.project.getVideoEffectByName("Lumetri Color"));
+   */
+  addVideoEffect(effect: VideoEffect): boolean
   canDoMulticam(): boolean
   getClipPanComponent(): object
   getComponentAt(p0: number): object
