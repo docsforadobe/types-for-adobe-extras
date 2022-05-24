@@ -497,8 +497,17 @@ interface Sequence {
   /**
    * See: https://github.com/Adobe-CEP/Samples/blob/00366bf8a86e44bd83704a04a8f4f0cdc75fd38f/PProPanel/jsx/PPRO/Premiere.jsx#L71
    *
-   * @param timecode The timecode of the frame to export. Format may require replacing [semi-]colons (";:") with underscores ("_").
-   * @param filePath The path (including filename) at which to export the png file.
+   * @param timecode The timecode or frame number of the frame to export. Format may require replacing [semi-]colons (";:") with underscores ("_").
+   * @param filePath The fsName path (including filename) at which to export the png file. Note: Must use Filesystem separator (e.g. Mac > "/" Windows > "\\")
+   *
+   * @example
+   * // get QE sequence
+   * var sequence = qe.project.getActiveSequence();
+   * var path = new File('C:/path/to/file/frame.png').fsName;
+   * // export by timecode
+   * sequence.exportFramePNG('00:00:46:13', path);
+   * // or export by frame number
+   * sequence.exportFramePNG('1117', path);
    */
   exportFramePNG(timecode: string, filePath: string): any
   exportFrameTarga(): any
