@@ -304,6 +304,9 @@ interface QETrackItem {
   ): boolean
   moveToTrack(p0: number, p1: number, p2: string, p3: boolean): boolean
   remove(p0: boolean, p1: boolean): boolean
+  /**
+   * Appears to be broken
+   */
   removeEffects(p0: boolean, p1: boolean, p2: boolean, p3: boolean, p4: boolean): boolean
   rippleDelete(): boolean
   roll(p0: string, p1: boolean, p2: boolean): boolean
@@ -317,7 +320,23 @@ interface QETrackItem {
   setName(p0: string): boolean
   setReverse(p0: boolean): boolean
   setScaleToFrameSize(p0: boolean): boolean
-  setSpeed(p0: number, p1: string, p2: boolean, p3: boolean, p4: boolean): boolean
+  /**
+   * Add a video effect to a QETrackItem
+   *
+   * @param speedFactor the speed factor ( 1 = 100% )
+   * @param unkown can leave a blank string
+   * @param isReversed set if the clip speed should be reversed or not
+   * @param p3
+   * @param ripple
+   * @example clip.setSpeed(1.5, '', true, true, true)
+   */
+  setSpeed(
+    speeedFactor: number,
+    unkown: string,
+    isReversed: boolean,
+    p3: boolean,
+    ripple: boolean,
+  ): boolean
   setStartPercent(p0: number): boolean
   setStartPosition(p0: number, p1: number): boolean
   setSwitchSources(p0: boolean): boolean
