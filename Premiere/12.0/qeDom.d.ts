@@ -516,6 +516,8 @@ interface Sequence {
   /**
    * See: https://github.com/Adobe-CEP/Samples/blob/00366bf8a86e44bd83704a04a8f4f0cdc75fd38f/PProPanel/jsx/PPRO/Premiere.jsx#L71
    *
+   * WARNING : all exportFrame() functions are NOT synchronous
+   *
    * @param timecode The timecode or frame number of the frame to export. Format may require replacing [semi-]colons (";:") with underscores ("_").
    * @param filePath The fsName path (including filename) at which to export the png file. Note: Must use Filesystem separator (e.g. Mac > "/" Windows > "\\")
    *
