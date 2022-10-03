@@ -35,7 +35,7 @@ interface QEApplication {
   source: QESource
   getDebugDatabaseEntry(): any
   executeConsoleCommand(): any
-  outputToConsole(): any
+  outputToConsole(text: string): any
   exit(): any
   stop(): any
   open(): any
@@ -168,7 +168,7 @@ interface QEProject {
    */
   getVideoEffectByName(name: string, pp1?: boolean): VideoEffect
   getVideoEffectList(peffectType?: number, pp1?: boolean): string[]
-  getVideoTransitionByName(pp0: string, pp1: boolean): object
+  getVideoTransitionByName(pp0: string, pp1?: boolean): object
   getVideoTransitionList(pp0?: number, pp1?: boolean): string[]
   (pp0: any[], pisNumberedStills: boolean): boolean
   importAEComps(pp0: string, pp1: any[]): boolean
