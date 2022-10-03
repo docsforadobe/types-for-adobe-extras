@@ -148,10 +148,10 @@ interface QEProject {
 
   findItemByID(pp0: string): object
   flushCache(): boolean
-  getAudioEffectByName(pp0: string, pchannelType: number, pp2: boolean): object
-  getAudioEffectList(peffectType: number, pp1: boolean): string[]
-  getAudioTransitionByName(pp0: string, pp1: boolean): object
-  getAudioTransitionList(pp0: boolean): string[]
+  getAudioEffectByName(pp0: string, pchannelType?: number, pp2?: boolean): object
+  getAudioEffectList(peffectType?: number, pp1?: boolean): string[]
+  getAudioTransitionByName(pp0: string, pp1?: boolean): object
+  getAudioTransitionList(pp0?: boolean): string[]
   getBinAt(pp0: number): QEProjectItemContainer
   getItemAt(pp0: number): object
   getRemainingMetadataCacheIndexCount(): number
@@ -167,9 +167,9 @@ interface QEProject {
    * @example qe.project.getVideoEffectByName("Lumetri Color");
    */
   getVideoEffectByName(name: string, pp1?: boolean): VideoEffect
-  getVideoEffectList(peffectType: number, pp1: boolean): string[]
+  getVideoEffectList(peffectType?: number, pp1?: boolean): string[]
   getVideoTransitionByName(pp0: string, pp1: boolean): object
-  getVideoTransitionList(pp0: number, pp1: boolean): string[]
+  getVideoTransitionList(pp0?: number, pp1?: boolean): string[]
   (pp0: any[], pisNumberedStills: boolean): boolean
   importAEComps(pp0: string, pp1: any[]): boolean
   importAllAEComps(pp0: string): boolean
@@ -268,19 +268,19 @@ interface QETrackItem {
   readonly staticClipGain: number
   readonly switchSources: number
   readonly timeInterpolationType: number
-  readonly type: number
+  readonly type: "Clip" | "Empty" | "Transition" | string
   // readonly startPercent: number // Don't Use, will crash Premiere
   // readonly endPercent: number // Don't Use, will crash Premiere
 
   addAudioEffect(p0: object): boolean
   addTransition(
-    p0: object,
-    p1: boolean,
-    p2: string,
-    p3: string,
-    p4: number,
-    p5: boolean,
-    p6: boolean,
+    transition: object,
+    addToStart: boolean,
+    p2?: string,
+    p3?: string,
+    p4?: number,
+    p5?: boolean,
+    p6?: boolean,
   ): boolean
   /**
    * Add a video effect to a QETrackItem
