@@ -248,6 +248,19 @@ interface QEProjectItem {
 interface VideoEffect {
   name: string
 }
+
+interface QEComponent {
+  id: string
+  matchName: string
+  name: string
+  getParamControlValue(): any
+  getParamKeyframes(): any
+  getParamList(): any
+  getParamValue(): any
+  remove(): any
+  setParamValue(): any
+}
+
 interface QETrackItem {
   readonly alignment: number
   readonly antiAliasQuality: number
@@ -273,15 +286,21 @@ interface QETrackItem {
   // readonly endPercent: number // Don't Use, will crash Premiere
 
   addAudioEffect(p0: object): boolean
+
+  /**
+   * Add a transition to a QETrackItem
+   *
+   */
   addTransition(
     transition: object,
     addToStart: boolean,
-    p2?: string,
-    p3?: string,
-    p4?: number,
-    p5?: boolean,
-    p6?: boolean,
+    inDurationString?: string,
+    inOffsetString?: string,
+    inAlignment?: number,
+    inSingleSided?: boolean,
+    inAlignToVideo?: boolean,
   ): boolean
+
   /**
    * Add a video effect to a QETrackItem
    *
@@ -291,7 +310,7 @@ interface QETrackItem {
   addVideoEffect(effect: VideoEffect): boolean
   canDoMulticam(): boolean
   getClipPanComponent(): object
-  getComponentAt(p0: number): object
+  getComponentAt(index: number): QEComponent
   getProjectItem(): object
   move(
     p0: string,
