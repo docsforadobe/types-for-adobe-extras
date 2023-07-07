@@ -266,8 +266,8 @@ interface QETrackItem {
   readonly antiAliasQuality: number
   readonly borderColor: number
   readonly borderWidth: number
-  readonly duration: number
-  readonly end: number
+  readonly duration: string
+  readonly end: QETime
   readonly frameBlend: number
   readonly mediaType: number
   readonly multicamEnabled: number
@@ -277,7 +277,7 @@ interface QETrackItem {
   readonly reversed: number
   readonly scaleToFrameSize: number
   readonly speed: number
-  readonly start: number
+  readonly start: QETime
   readonly staticClipGain: number
   readonly switchSources: number
   readonly timeInterpolationType: number
@@ -443,11 +443,11 @@ interface Sequence {
    *
    * See: https://github.com/Adobe-CEP/Samples/blob/00366bf8a86e44bd83704a04a8f4f0cdc75fd38f/PProPanel/jsx/PPRO/Premiere.jsx#L499
    */
-  CTI: Time
-  inPoint: Time
-  outPoint: Time
-  workInPoint: Time
-  workOutPoint: Time
+  CTI: QETime
+  inPoint: QETime
+  outPoint: QETime
+  workInPoint: QETime
+  workOutPoint: QETime
   useMaxBitDepth: boolean
   useMaxRenderQuality: boolean
   videoDisplayFormat: 110
@@ -555,7 +555,7 @@ interface Sequence {
   exportFrameTIFF(): any
   flushCache(): any
 }
-interface Time {
+interface QETime {
   ticks: number
   secs: number
   frames: number
