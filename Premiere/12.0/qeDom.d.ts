@@ -321,7 +321,12 @@ interface QETrackItem {
     p5: boolean,
     p6: boolean,
   ): boolean
-  moveToTrack(p0: number, p1: number, p2: string, p3: boolean): boolean
+  moveToTrack(
+    trackIndex: number,
+    p1: number,
+    p2: string,
+    copy?: boolean, // optional: default `false`
+  ): boolean
   remove(p0: boolean, p1: boolean): boolean
   /**
    * Appears to be broken
