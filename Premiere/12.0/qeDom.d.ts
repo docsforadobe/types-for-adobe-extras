@@ -512,7 +512,7 @@ interface Sequence {
    * Retrieve the file
    */
   getExportFileExtension(): any
-  razor(): any
+  razor(timecode: string, p1: boolean, p2: boolean): any
   setCTI(): any
   setInPoint(): any
   setOutPoint(): any
