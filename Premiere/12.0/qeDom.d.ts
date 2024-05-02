@@ -321,11 +321,25 @@ interface QETrackItem {
     p5: boolean,
     p6: boolean,
   ): boolean
+  /**
+   * Move a clip up or down tracks
+   *
+   * @param videoTrackIndexMoveCount The number of video tracks to move the clip
+   * @param audioTrackIndexMoveCount The number of audio tracks to move the clip
+   * @param p2 ?
+   * @param copyClip If true, the clip will be copied to the new location. If false, the clip will be moved to the new location. [Default: false]
+   *
+   * @example item.moveToTrack(1, 0, '', true); // move video up one track
+   * @example item.moveToTrack(0, 1, '', true); // move audio down one track
+   * @example item.moveToTrack(-1, 0, '', true); // move video down one track
+   * @example item.moveToTrack(0, -1, '', true); // move audio up one track
+   *
+   */
   moveToTrack(
-    trackIndex: number,
-    p1: number,
+    videoTrackIndexMoveCount: number,
+    audioTrackIndexMoveCount: number,
     p2: string,
-    copy?: boolean, // optional: default `false`
+    copyClip?: boolean, // optional: default `false`
   ): boolean
   remove(p0: boolean, p1: boolean): boolean
   /**
