@@ -312,9 +312,17 @@ interface QETrackItem {
   getClipPanComponent(): object
   getComponentAt(index: number): QEComponent
   getProjectItem(): object
+
+  /**
+   * Move a clip on the timeline
+   *
+   * @param frames The number of frames to move the clip
+   * @param copyClip If true, the clip will be copied to the new location. If false, the clip will be moved to the new location. [Default: false]
+   * @example item.copy('10', false)
+   */
   move(
-    p0: string,
-    p1: boolean,
+    frames: string,
+    copyClip: boolean,
     p2: boolean,
     p3: boolean,
     p4: boolean,
@@ -326,7 +334,7 @@ interface QETrackItem {
    *
    * @param videoTrackIndexMoveCount The number of video tracks to move the clip
    * @param audioTrackIndexMoveCount The number of audio tracks to move the clip
-   * @param p2 ?
+   * @param moveFrames The number of frames to shift the clip forward or backward. [Default: 0]
    * @param copyClip If true, the clip will be copied to the new location. If false, the clip will be moved to the new location. [Default: false]
    *
    * @example item.moveToTrack(1, 0, '', true); // move video up one track
@@ -338,7 +346,7 @@ interface QETrackItem {
   moveToTrack(
     videoTrackIndexMoveCount: number,
     audioTrackIndexMoveCount: number,
-    p2: string,
+    moveFrames: string,
     copyClip?: boolean, // optional: default `false`
   ): boolean
   remove(p0: boolean, p1: boolean): boolean
@@ -546,7 +554,7 @@ interface Sequence {
   getEmptyBarTimes(): any
   setUseMaxBitDepth(): any
   setUseMaxRenderQuality(): any
-  setVideoDisplayFormat(): any
+  setVideoDisplayFormat(displayFormat: number): boolean
   setAudioDisplayFormat(): any
   setPreviewFrameSize(): any
   setPreviewPresetPath(): any
