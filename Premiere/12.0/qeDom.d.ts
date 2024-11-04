@@ -612,7 +612,7 @@ interface Track {
   overwrite(): any
   addAudioEffect(): any
   getComponentAt(): any
-  razor(): any
+  razor(timecode: string): any
   setLock(): any
   isLocked(): boolean
   setSyncLock(): any
