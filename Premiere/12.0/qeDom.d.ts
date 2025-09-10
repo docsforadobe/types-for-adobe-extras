@@ -427,6 +427,7 @@ interface QEPlayer {
   clearAudioDropoutStatus(): any
   captureAudioDeviceLoad(): any
   getPosition(): any
+  scrubTo(ticks: string): boolean
 }
 interface QEMasterClip {
   readonly audioChannelType: number
