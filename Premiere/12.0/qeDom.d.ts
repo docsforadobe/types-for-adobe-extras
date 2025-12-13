@@ -370,15 +370,16 @@ interface QETrackItem {
    * Add a video effect to a QETrackItem
    *
    * @param speedFactor the speed factor ( 1 = 100% )
-   * @param unkown can leave a blank string
+   * @param duration Timecode string to set the clip's new length, or blank string to preserve duration (if sufficient source footage).
    * @param isReversed set if the clip speed should be reversed or not
-   * @param p3
-   * @param ripple
+   * @param p3 Unknown
+   * @param ripple Whether to ripple edit other clips on the track (Only matters if the length of the clip changes)
    * @example clip.setSpeed(1.5, '', true, true, true)
+   * @example clip.setSpeed(2.0, "00:00:22:15", false, true, false)
    */
   setSpeed(
     speeedFactor: number,
-    unkown: string,
+    duration: string,
     isReversed: boolean,
     p3: boolean,
     ripple: boolean,
