@@ -523,8 +523,8 @@ interface Sequence {
     subAudioIndex?: number,
   ): boolean
   removeTracks(): any
-  removeVideoTrack(): any
-  removeAudioTrack(): any
+  removeVideoTrack(index: number): any
+  removeAudioTrack(index: number): any
   removeEmptyVideoTracks(): any
   removeEmptyAudioTracks(): any
   exportToAME(): any
