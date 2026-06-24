@@ -535,7 +535,7 @@ interface Sequence {
    * Retrieve the file
    */
   getExportFileExtension(): any
-  razor(timecode: string, p1: boolean, p2: boolean): any
+  razor(timecode: string): any
   setCTI(): any
   setInPoint(): any
   setOutPoint(): any
@@ -613,8 +613,8 @@ interface Track {
   overwrite(): any
   addAudioEffect(): any
   getComponentAt(): any
-  razor(timecode: string): any
-  setLock(): any
+  razor(timecode: string, includeLinkedClips: boolean, p2: boolean): any
+  setLock(locked: boolean): any
   isLocked(): boolean
   setSyncLock(): any
   isSyncLocked(): boolean
