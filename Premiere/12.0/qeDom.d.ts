@@ -226,6 +226,7 @@ interface QEProjectItemContainer {
   getSequenceItemAt(pp0: number): object
   newBin(pp0: string): boolean
 }
+
 interface QEProjectItem {
   readonly clip: QEMasterClip
   readonly filePath: string
@@ -245,6 +246,7 @@ interface QEProjectItem {
   rename(passetName: string): boolean
   setOffline(): boolean
 }
+
 interface VideoEffect {
   name: string
 }
@@ -255,10 +257,69 @@ interface QEComponent {
   name: string
   getParamControlValue(): any
   getParamKeyframes(): any
-  getParamList(): any
-  getParamValue(): any
+  getParamList(): string[]
+  getParamValue(paramName: string): string
   remove(): any
-  setParamValue(): any
+  setParamValue(paramName: string, value: string): boolean
+}
+
+interface QETrack {
+  readonly id: number
+  readonly index: number
+  readonly name: string
+  readonly type: "Video" | "Audio"
+  /**
+   * Work only for Audio Track!
+   *
+   */
+  readonly numComponents: number
+  /**
+   *  Return amount of items on track including Clip, Transition, and Empty
+   *
+   */
+  readonly numItems: number
+  /**
+   *  Return amount of transition on track starts from 1
+   *  By default, Premiere Pro has 1 transition on each track
+   *  But this first transition is not avaiable to get
+   */
+  readonly numTransitions: number
+  /**
+   *  Add audio effect to entire track
+   *  Example: track.addAudioEffect(qe.project.getAudioEffectByName("Delay"));
+   */
+  addAudioEffect(effect: object): boolean
+  /**
+   * Work only for Audio Track!
+   *
+   */
+  getComponentAt(index: number): QEComponent
+  getItemAt(index: number): QETrackItem
+  getTransitionAt(index: number): QETrackItem
+  /**
+   * Insert a clip to the track at specific timecode
+   * @param clip The clip to insert
+   * @param timecode The timecode to insert the clip, format: "00:00:00:00"
+   */
+  insert(clip: QEProjectItem, timecode: string): boolean
+  /**
+   * Insert a clip to the track at specific timecode overwriting the existing clip
+   * @param clip The clip to insert
+   * @param timecode The timecode to insert the clip, format: "00:00:00:00"
+   */
+  overwrite(clip: QEProjectItem, timecode: string): boolean
+  isLocked(): boolean
+  isMuted(): boolean
+  isSyncLocked(): boolean
+  /**
+   * Add edit at specific timecode
+   * @param timecode The timecode to add edit, format: "00:00:00:00"
+   */
+  razor(timecode: string): boolean
+  setLock(isLocked: boolean): boolean
+  setMute(isMuted: boolean): boolean
+  setName(name: string): boolean
+  setSyncLock(isSyncLocked: boolean): boolean
 }
 
 interface QETrackItem {
